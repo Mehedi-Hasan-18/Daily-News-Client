@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react"; // Install lucide-react for icons
+import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import useAuthContext from "../hooks/useAuthContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user,logoutUser } = useAuthContext();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -31,6 +34,21 @@ const Navbar = () => {
           <a href="/contact" className="hover:text-red-600">
             Contact
           </a>
+          {user ? (
+            <div className="flex gap-3">
+              <Link to={"/dashboard"}>Dashboard</Link>
+              <Link onClick={logoutUser}>LogOut</Link>
+            </div>
+          ) : (
+            <div className="flex gap-3">
+              <Link className="btn btn-primary" to={"register"}>
+                Register
+              </Link>
+              <Link className="btn btn-primary" to={"login"}>
+                Login
+              </Link>
+            </div>
+          )}
         </div>
 
         {/* Mobile Button */}
@@ -51,10 +69,7 @@ const Navbar = () => {
           <a href="/" className="block text-white hover:text-red-600">
             Home
           </a>
-          <a
-            href="/categories"
-            className="block text-white hover:text-red-600"
-          >
+          <a href="/categories" className="block text-white hover:text-red-600">
             Categories
           </a>
           <a href="/latest" className="block text-white hover:text-red-600">

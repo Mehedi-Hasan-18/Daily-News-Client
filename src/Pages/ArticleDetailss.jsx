@@ -4,7 +4,7 @@ import apiClient from "../Services/apiClient";
 import { Calendar, User, Tag, Clock, Share2, Bookmark } from "lucide-react";
 import { format } from "date-fns";
 
-const ArticlesDetails = () => {
+const ArticlesDetailss = () => {
   const { id } = useParams();
   const [article, SetArticle] = useState(null);
 
@@ -123,4 +123,4 @@ const ArticlesDetails = () => {
   );
 };
 
-export default ArticlesDetails;
+export default ArticlesDetailss;
