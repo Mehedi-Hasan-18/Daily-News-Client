@@ -16,6 +16,8 @@ import PrivateRoute from "../Components/PrivateRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AddNews from "../Components/AddNews";
 import AddCategory from "../Components/AddCategory";
+import Dashbord from "../Pages/Dashbord";
+import ArticleEditForm from "../Components/ArticleEditForm";
 
 const AppRoutes = () => {
   return (
@@ -47,6 +49,8 @@ const AppRoutes = () => {
           </PrivateRoute>
         }
       >
+        <Route path="/dashboard" element={<Dashbord></Dashbord>}></Route>
+        <Route path="article/edit/:id/" element={<ArticleEditForm></ArticleEditForm>}></Route>
         <Route path="news/add" element={<AddNews></AddNews>}></Route>
         <Route path="categories/add" element={<AddCategory></AddCategory>}></Route>
       </Route>
