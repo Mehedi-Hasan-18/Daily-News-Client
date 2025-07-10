@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import authApiClient from "../Services/authApiClient";
 import { useNavigate } from "react-router-dom";
+import authApiClient from "../Services/authApiClient";
 
-const AddCategory = () => {
+const AddAuthors = () => {
   const {
     register,
     handleSubmit,
@@ -15,11 +15,11 @@ const AddCategory = () => {
 
   const onSubmit = async (data) => {
     try {
-      await authApiClient.post("/categories/", data);
-      setSuccessMessage("✅ Category added successfully!");
+      await authApiClient.post("/authors/", data);
+      setSuccessMessage("✅ Author added successfully!");
       setTimeout(() => navigate("/dashboard"), 3000);
     } catch (error) {
-      console.error("Error adding category:", error);
+      console.error("Error adding Author:", error);
       setSuccessMessage("");
     }
   };
@@ -34,10 +34,10 @@ const AddCategory = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <h1 className="text-center text-2xl text-blue-400 font-semibold">
-          Category Details Form
+          Authors Details Form
         </h1>
         <div>
-          <label className="block text-sm font-medium">Category Name</label>
+          <label className="block text-sm font-medium">Author Name</label>
           <input
             {...register("name", {
               required: true,
@@ -47,21 +47,19 @@ const AddCategory = () => {
             className="w-full mt-1 border px-3 py-2 rounded"
           />
           {errors.name && (
-            <p className="text-red-500 text-sm">Category name is required</p>
+            <p className="text-red-500 text-sm">Author name is required</p>
           )}
-          <label className="block text-sm font-medium">
-            Category Description
-          </label>
+          <label className="block text-sm font-medium">Author Biography</label>
           <textarea
-            {...register("descriptions", {
+            {...register("biography", {
               required: true,
+              minLength: 1,
+              maxLength: 200,
             })}
             className="w-full mt-1 border px-3 py-2 rounded"
           />
           {errors.name && (
-            <p className="text-red-500 text-sm">
-              Category Descriptions is required
-            </p>
+            <p className="text-red-500 text-sm">Author Biography is required</p>
           )}
         </div>
 
@@ -69,11 +67,11 @@ const AddCategory = () => {
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          Add Category
+          Add Author
         </button>
       </form>
     </div>
   );
 };
 
-export default AddCategory;
+export default AddAuthors;

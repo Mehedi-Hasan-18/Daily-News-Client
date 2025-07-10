@@ -23,7 +23,8 @@ const Sidebar = () => {
     { to: "/latest", icon: FaNewspaper, label: "News" },
     { to: "/dashboard/news/add", icon: FiPlusCircle, label: "Add News" },
     { to: "/categories", icon: FiTag, label: "Categories" },
-    { to: "/categories/add", icon: FiPlusCircle, label: "Add Category" },
+    { to: "/dashboard/category/add", icon: FiPlusCircle, label: "Add Category" },
+    { to: "/dashboard/author/add", icon: FiPlusCircle, label: "Add Author" },
     { to: "/users", icon: FiUsers, label: "Users" },
   ];
 

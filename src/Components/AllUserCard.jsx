@@ -1,18 +1,13 @@
 import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
+import authApiClient from "../Services/authApiClient";
 
-const AllUserCard = ({ allUser }) => {
+const AllUserCard = ({ allUser, setUser }) => {
   if (allUser.length < 1) return <div>Loading......</div>;
-  console.log(allUser);
-
-  const handleEdit = (user) => {
-    console.log("Edit user:", user);
-    // Add your edit logic here
-  };
 
   const handleDelete = (user) => {
     if (window.confirm("Are you sure you want to delete this user item?")) {
-      console.log("Delete user:", user);
-      // Add your delete logic here
+      authApiClient.delete(`auth/users/${user.id}/`);
+      setUser((prev) => prev.filter((item) => item.id !== user.id));
     }
   };
 
@@ -53,13 +48,6 @@ const AllUserCard = ({ allUser }) => {
 
               <td className="py-4 px-6">
                 <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => handleEdit(user)}
-                    className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                    title="Edit"
-                  >
-                    <FiEdit className="w-4 h-4" />
-                  </button>
                   <button
                     onClick={() => handleDelete(user)}
                     className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"

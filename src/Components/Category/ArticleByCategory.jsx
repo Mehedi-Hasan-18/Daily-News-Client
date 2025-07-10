@@ -9,7 +9,7 @@ const ArticleByCategory = () => {
   const [articles, setArticles] = useState([]);
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(false);
-  console.log(id)
+  console.log(id);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,11 +37,17 @@ const ArticleByCategory = () => {
       <h2 className="text-3xl font-bold text-center mb-8">
         Articles in {category?.name} Category
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {articles.map((article) => (
-          <ArticleCard key={article.id} article={article} />
-        ))}
-      </div>
+      {articles.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {articles.map((article) => (
+            <ArticleCard key={article.id} article={article} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center text-gray-500 text-xl">
+          📰 No articles found in this category.
+        </p>
+      )}
     </section>
   );
 };

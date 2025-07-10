@@ -1,17 +1,19 @@
 import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
+import authApiClient from "../Services/authApiClient";
+import { useNavigate } from "react-router-dom";
 
-const AllCategoryCard = ({ allCategory }) => {
+const AllCategoryCard = ({ allCategory, setCategory }) => {
+  const navigate = useNavigate();
   if (allCategory.length < 1) return <div>Loading......</div>;
 
   const handleEdit = (category) => {
-    console.log("Edit category:", category);
-    // Add your edit logic here
+    navigate(`categories/edit/${category.id}/`);
   };
 
   const handleDelete = (category) => {
     if (window.confirm("Are you sure you want to delete this category item?")) {
-      console.log("Delete category:", category);
-      // Add your delete logic here
+      authApiClient.delete(`categories/${category.id}/`);
+      setCategory((prev) => prev.filter((item) => item.id !== category.id));
     }
   };
 
@@ -33,7 +35,10 @@ const AllCategoryCard = ({ allCategory }) => {
         </thead>
         <tbody className="divide-y divide-gray-100">
           {allCategory.map((category) => (
-            <tr key={category.id} className="hover:bg-gray-50 transition-colors">
+            <tr
+              key={category.id}
+              className="hover:bg-gray-50 transition-colors"
+            >
               <td className="py-4 px-6">
                 <span className="text-sm font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded">
                   #{category.id}

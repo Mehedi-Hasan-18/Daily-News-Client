@@ -18,6 +18,9 @@ import AddNews from "../Components/AddNews";
 import AddCategory from "../Components/AddCategory";
 import Dashbord from "../Pages/Dashbord";
 import ArticleEditForm from "../Components/ArticleEditForm";
+import AuthorEditForm from "../Components/AuthorEditForm";
+import CategoryEditForm from "../Components/CategoryEditForm";
+import AddAuthors from "../Components/AddAuthors";
 
 const AppRoutes = () => {
   return (
@@ -49,10 +52,13 @@ const AppRoutes = () => {
           </PrivateRoute>
         }
       >
-        <Route path="/dashboard" element={<Dashbord></Dashbord>}></Route>
-        <Route path="article/edit/:id/" element={<ArticleEditForm></ArticleEditForm>}></Route>
-        <Route path="news/add" element={<AddNews></AddNews>}></Route>
-        <Route path="categories/add" element={<AddCategory></AddCategory>}></Route>
+        <Route path="/dashboard" element={<Dashbord></Dashbord>} />
+        <Route path="article/edit/:id/" element={<ArticleEditForm />} />
+        <Route path="authors/edit/:id/" element={<AuthorEditForm />} />
+        <Route path="categories/edit/:id/" element={<CategoryEditForm />} />
+        <Route path="news/add" element={<AddNews />} />
+        <Route path="category/add" element={<AddCategory />} />
+        <Route path="author/add" element={<AddAuthors />} />
       </Route>
     </Routes>
   );

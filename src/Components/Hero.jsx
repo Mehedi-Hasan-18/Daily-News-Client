@@ -144,10 +144,10 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
                 <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
                   <span className="bg-green-600 px-2 py-1 text-xs font-medium">
-                    {articles[5].category.name}
+                    {articles[3].category.name}
                   </span>
                   <h4 className="text-sm font-bold mt-2">
-                    {articles[5].headline.slice(0, 35)}...
+                    {articles[3].headline.slice(0, 35)}...
                   </h4>
                 </div>
               </div>

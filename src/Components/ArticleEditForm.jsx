@@ -38,6 +38,7 @@ const ArticleEditForm = () => {
     >
       {/* Headline */}
       <div>
+        <h1 className="text-center text-2xl text-blue-400 font-semibold">Article Edit Form</h1>
         <label className="block text-sm font-medium">Headline</label>
         <input
           {...register("headline", {

@@ -1,18 +1,19 @@
 import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import authApiClient from "../Services/authApiClient";
 
-const AllAuthor = ({ allAuthor }) => {
+const AllAuthor = ({ allAuthor, setAuthor }) => {
+  const navigate = useNavigate();
   if (allAuthor.length < 1) return <div>Loading......</div>;
-  console.log(allAuthor);
 
   const handleEdit = (author) => {
-    console.log("Edit author:", author);
-    // Add your edit logic here
+    navigate(`authors/edit/${author.id}/`);
   };
 
   const handleDelete = (author) => {
     if (window.confirm("Are you sure you want to delete this author item?")) {
-      console.log("Delete author:", author);
-      // Add your delete logic here
+      authApiClient.delete(`authors/${author.id}/`);
+      setAuthor((prev) => prev.filter((item) => item.id !== author.id));
     }
   };
 

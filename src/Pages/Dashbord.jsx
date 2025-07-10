@@ -11,7 +11,7 @@ import AllAuthor from "../Components/AllAuthor";
 
 const Dashbord = () => {
   const [news, setNews] = useState([]);
-//   const [latestnews, setLatestnews] = useState([]);
+  //   const [latestnews, setLatestnews] = useState([]);
   const [allNewss, setAllNews] = useState([]);
   const [category, setCategory] = useState([]);
   const [users, setUser] = useState([]);
@@ -95,13 +95,16 @@ const Dashbord = () => {
         <AllNewsCard allnews={allNewss} setAllNews={setAllNews}></AllNewsCard>
       )}
       {activeCard === "Total Category" && (
-        <AllCategoryCard allCategory={category}></AllCategoryCard>
+        <AllCategoryCard
+          allCategory={category}
+          setCategory={setCategory}
+        ></AllCategoryCard>
       )}
       {activeCard === "Total User" && (
-        <AllUserCard allUser={users}></AllUserCard>
+        <AllUserCard allUser={users} setUser={setUser}></AllUserCard>
       )}
       {activeCard === "Total Author" && (
-        <AllAuthor allAuthor={author}></AllAuthor>
+        <AllAuthor allAuthor={author} setAuthor={setAuthor}></AllAuthor>
       )}
     </div>
   );
