@@ -21,13 +21,17 @@ import ArticleEditForm from "../Components/ArticleEditForm";
 import AuthorEditForm from "../Components/AuthorEditForm";
 import CategoryEditForm from "../Components/CategoryEditForm";
 import AddAuthors from "../Components/AddAuthors";
+import ContactUs from "../Components/ContactUs";
+import About from "../Components/About";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<Main></Main>}>
         <Route path="/" element={<Home />} />
-        <Route path="categories" element={<Category />} />
+        <Route path="/contactus" element={<ContactUs/>} />
+        <Route path="/about" element={<About />} />
+        <Route path="/categories" element={<Category />} />
         <Route path="/categories/:id/article" element={<ArticleByCategory />} />
         <Route path="/articles/:id/" element={<ArticlesDetailss />} />
         <Route path="/mustread-articles/:id/" element={<ArticlesDetails />} />
@@ -36,7 +40,7 @@ const AppRoutes = () => {
           element={<DontMissArticleDetails />}
         />
         <Route path="/popular-articles/:id/" element={<PopularNewsDetails />} />
-        <Route path="/latest/" element={<LatestNewsArticle />} />
+        <Route path="/latest" element={<LatestNewsArticle />} />
         <Route path="register" element={<Registration></Registration>} />
         <Route
           path="activate/:uid/:token"

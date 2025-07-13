@@ -1,5 +1,5 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
@@ -38,14 +38,14 @@ const Footer = () => {
         <div>
           <h2 className="font-bold text-lg mb-2">FOLLOW US</h2>
           <div className="flex space-x-4 mt-2 mb-4">
-            <a href="#" className="bg-gray-800 hover:bg-blue-600 p-2 rounded">
+            <a href="https://www.facebook.com/mehedi.hasan.312630" className="bg-gray-800 hover:bg-blue-600 p-2 rounded">
               <FaFacebookF size={20} />
             </a>
-            <a href="#" className="bg-gray-800 hover:bg-pink-500 p-2 rounded">
+            <a href="https://www.instagram.com/meheeeeedi_hasan/" className="bg-gray-800 hover:bg-pink-500 p-2 rounded">
               <FaInstagram size={20} />
             </a>
-            <a href="#" className="bg-gray-800 hover:bg-blue-400 p-2 rounded">
-              <FaTwitter size={20} />
+            <a href="https://www.linkedin.com/in/mehedi-hasan-85278b2a0/" className="bg-gray-800 hover:bg-blue-400 p-2 rounded">
+              <FaLinkedin size={20} />
             </a>
           </div>
 
@@ -71,7 +71,7 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="bg-[#000] text-gray-400 text-center md:flex md:justify-between items-center px-6 py-4 border-t border-gray-700">
         <p className="text-xs text-center md:text-left">
-          © Newspaper WordPress Theme by TagDiv
+          © Daily News
         </p>
         <div className="flex justify-center md:justify-end space-x-4 mt-2 md:mt-0">
           <a href="#" className="hover:text-white">Disclaimer</a>

@@ -31,13 +31,13 @@ const Navbar = () => {
           <a href="/about" className="hover:text-red-600">
             About
           </a>
-          <a href="/contact" className="hover:text-red-600">
+          <a href="/contactus" className="hover:text-red-600">
             Contact
           </a>
           {user ? (
             <div className="flex gap-3">
-              <Link to={"/dashboard"}>Dashboard</Link>
-              <Link onClick={logoutUser}>LogOut</Link>
+              <Link className="hover:text-red-600" to={"/dashboard"}>Dashboard</Link>
+              <Link className="hover:text-red-600" onClick={logoutUser}>LogOut</Link>
             </div>
           ) : (
             <div className="flex gap-3">
