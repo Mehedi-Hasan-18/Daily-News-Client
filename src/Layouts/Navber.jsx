@@ -72,9 +72,9 @@ const Navbar = () => {
           <a href="/categories" className="block text-white hover:text-red-600">
             Categories
           </a>
-          <a href="/latest" className="block text-white hover:text-red-600">
+          <Link to={"/latest"} className="block text-white hover:text-red-600">
             Latest News
-          </a>
+          </Link>
           <a href="/about" className="block text-white hover:text-red-600">
             About
           </a>
