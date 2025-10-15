@@ -40,7 +40,7 @@ const MustRead = () => {
     fetchArticle();
   }, []);
   return (
-    <div className="w-11/12 mx-auto">
+    <div className="w-11/12 mx-auto py-5 md:py-0">
       <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-3 py-2 sm:px-4 text-sm sm:text-base font-semibold shadow-md inline-block rounded-sm">
         Must Read
       </span>

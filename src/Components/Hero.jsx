@@ -56,9 +56,9 @@ const Hero = () => {
       </div>
 
       {/* Hero Layout */}
-      <div className="flex h-[460px] gap-4">
+      <div className="flex flex-col md:flex-row md:h-[460px] gap-4">
         {/* Left Featured Article */}
-        <div className="w-1/2 h-full">
+        <div className="md:w-1/2 w-full h-full">
           <Featured
             article={topArticles[0]}
             onClick={() => handleClick(topArticles[0].id)}
@@ -66,7 +66,7 @@ const Hero = () => {
         </div>
 
         {/* Right Side Articles */}
-        <div className="flex flex-col w-1/2 gap-4">
+        <div className="md:w-1/2 w-full h-full flex flex-col gap-4">
           {/* Top Right Article */}
           <div className="h-1/2">
             <Secondary
@@ -76,15 +76,15 @@ const Hero = () => {
           </div>
 
           {/* Bottom Right - Two Small Articles */}
-          <div className="flex h-1/2 gap-4">
-            <div className="w-1/2">
+          <div className="flex flex-col md:flex-row h-1/2 gap-4">
+            <div className="w-full md:w-1/2">
               <SmallCard
                 article={topArticles[2]}
                 onClick={() => handleClick(topArticles[2].id)}
                 defaultImage={C}
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <SmallCard
                 article={topArticles[3]}
                 onClick={() => handleClick(topArticles[3].id)}
