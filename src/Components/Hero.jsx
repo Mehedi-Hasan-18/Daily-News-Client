@@ -49,7 +49,7 @@ const Hero = () => {
   const topArticles = articles.slice(0, 4);
 
   return (
-    <div className="w-11/12 mt-5 mx-auto min-h-screen">
+    <div className="w-11/12 mt-5 mx-auto">
       {/* Header Section */}
       <div className="mb-6 flex items-center relative overflow-hidden">
         <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-2 font-semibold shadow-md relative whitespace-nowrap">
@@ -63,7 +63,7 @@ const Hero = () => {
       </div>
 
       {/* Hero Layout */}
-      <div className="flex flex-col md:flex-row md:h-[460px] gap-4">
+      <div className="flex flex-col md:flex-row md:h-[500px] gap-4">
         {/* Left Featured Article */}
         <div className="md:w-1/2 w-full h-full">
           <Featured
