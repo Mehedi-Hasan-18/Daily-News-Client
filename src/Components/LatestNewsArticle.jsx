@@ -11,6 +11,7 @@ const LatestNewsArticle = () => {
   const [articles, setArticles] = useState([]);
   const [mustreadarticles, setMustReadArticles] = useState([]);
   const [populararticles, setPopularArticles] = useState([]);
+  const [dontmissarticles, setDontmissarticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,6 +21,7 @@ const LatestNewsArticle = () => {
   const [articleCount, setArticleCount] = useState(0);
   const [mustReadCount, setMustReadCount] = useState(0);
   const [popularCount, setPopularCount] = useState(0);
+  const [dontmissCount, setDontmissCount] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
 
@@ -29,7 +31,7 @@ const LatestNewsArticle = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const [articlesRes, mustReadRes, popularRes] = await Promise.all([
+        const [articlesRes, mustReadRes, popularRes,dontmissRes] = await Promise.all([
           apiClient.get(
             `/articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
           ),
@@ -39,31 +41,38 @@ const LatestNewsArticle = () => {
           apiClient.get(
             `/popular-articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
           ),
+          apiClient.get(
+            `/dontmiss-articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
+          ),
         ]);
 
         setArticles(articlesRes.data.results || []);
         setMustReadArticles(mustReadRes.data.results || []);
         setPopularArticles(popularRes.data.results || []);
+        setDontmissarticles(dontmissRes.data.results || []);
 
         // Set individual counts
         setArticleCount(articlesRes.data.count || 0);
         setMustReadCount(mustReadRes.data.count || 0);
         setPopularCount(popularRes.data.count || 0);
+        setDontmissCount(dontmissRes.data.count || 0);
 
         // Check if any of the three has next/previous
         setHasNext(
-          articlesRes.data.next || mustReadRes.data.next || popularRes.data.next
+          articlesRes.data.next || mustReadRes.data.next || popularRes.data.next || dontmissRes.data.next
         );
         setHasPrevious(
           articlesRes.data.previous ||
             mustReadRes.data.previous ||
-            popularRes.data.previous
+            popularRes.data.previous || 
+            dontmissRes.data.previous
         );
       } catch (error) {
         console.error("Error fetching articles:", error);
         setArticles([]);
         setMustReadArticles([]);
         setPopularArticles([]);
+        setDontmissarticles([]);
       } finally {
         setLoading(false);
       }
@@ -97,7 +106,7 @@ const LatestNewsArticle = () => {
   };
 
   // Calculate total count from all three types
-  const totalCount = articleCount + mustReadCount + popularCount;
+  const totalCount = articleCount + mustReadCount + popularCount + dontmissCount;
 
   // Calculate total pages (assuming all use same page size, default 10)
   const pageSize = 10;
@@ -105,7 +114,7 @@ const LatestNewsArticle = () => {
 
   // Current page items count
   const currentItemsCount =
-    articles.length + mustreadarticles.length + populararticles.length;
+    articles.length + mustreadarticles.length + populararticles.length + dontmissarticles.length;
 
   // Generate page numbers to display
   const getPageNumbers = () => {
@@ -180,6 +189,7 @@ const LatestNewsArticle = () => {
               {articleCount > 0 && <span>Latest: {articleCount}</span>}
               {mustReadCount > 0 && <span>Must Read: {mustReadCount}</span>}
               {popularCount > 0 && <span>Popular: {popularCount}</span>}
+              {dontmissCount > 0 && <span>Don't Miss: {dontmissCount}</span>}
             </div>
             <p className="text-sm">Showing {currentItemsCount} on this page</p>
           </div>

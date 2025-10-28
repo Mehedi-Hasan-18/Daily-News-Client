@@ -23,6 +23,7 @@ import CategoryEditForm from "../Components/CategoryEditForm";
 import AddAuthors from "../Components/AddAuthors";
 import ContactUs from "../Components/ContactUs";
 import About from "../Components/About";
+import AllUserCard from "../Components/AllUserCard";
 
 const AppRoutes = () => {
   return (
