@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Outlet } from "react-router";
-import Navber from "../Components/Dashboard/Navber";
 import Sidebar from "../Components/Dashboard/Sidebar";
 
 const DashboardLayout = () => {
@@ -23,8 +22,6 @@ const DashboardLayout = () => {
 
       {/* Page content */}
       <div className="drawer-content flex flex-col">
-        {/* Navber */}
-        <Navber sidebarOpen={sidebarOpen} />
 
         {/* Main content */}
         <main className="p-6">

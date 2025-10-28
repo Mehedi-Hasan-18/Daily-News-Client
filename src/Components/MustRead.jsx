@@ -42,7 +42,7 @@ const MustRead = () => {
   }, []);
 
   return (
-    <div className="w-full bg-gradient-to-b from-white via-slate-50 to-white md:py-14 mt-0">
+    <div className="w-full bg-gradient-to-l from-pink-50 to-blue-50 md:py-14 mt-0">
       <div className="w-11/12 mx-auto">
         {/* Header */}
         <div className="mb-10">
