@@ -15,7 +15,7 @@ const MustRead = () => {
       try {
         setLoading(true);
         const response = await apiClient.get("/mustread-articles/");
-        setMustReadArticle(response.data);
+        setMustReadArticle(response.data.results);
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {
@@ -30,7 +30,7 @@ const MustRead = () => {
       try {
         setLoading1(true);
         const response = await apiClient.get("/dontmiss-articles/");
-        setDontMissArticle(response.data);
+        setDontMissArticle(response.data.results);
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {

@@ -18,7 +18,7 @@ const PopularNews = () => {
       try {
         setLoading(true);
         const response = await apiClient.get("/popular-articles/");
-        setArticle(response.data);
+        setArticle(response.data.results);
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {

@@ -29,15 +29,15 @@ const Dashbord = () => {
         ]);
 
         const totalNews =
-          news1.data.length +
-          news2.data.length +
-          news3.data.length +
-          news4.data.length;
+          news1.data.results.length +
+          news2.data.results.length +
+          news3.data.results.length +
+          news4.data.results.length;
         const allNewsArray = [
-          ...news1.data.map((item) => ({ ...item })),
-          ...news2.data.map((item) => ({ ...item })),
-          ...news3.data.map((item) => ({ ...item })),
-          ...news4.data.map((item) => ({ ...item })),
+          ...news1.data.results.map((item) => ({ ...item })),
+          ...news2.data.results.map((item) => ({ ...item })),
+          ...news3.data.results.map((item) => ({ ...item })),
+          ...news4.data.results.map((item) => ({ ...item })),
         ];
 
         setNews(totalNews);

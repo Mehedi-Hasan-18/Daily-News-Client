@@ -6,6 +6,7 @@ import Secondary from "./Hero/Secondary";
 import SmallCard from "./Hero/SmallCard";
 import C from "../assets/C.jpg";
 import D from "../assets/D.jpg";
+import { CircleLoader, BeatLoader, RingLoader } from "react-spinners";
 
 const Hero = () => {
   const [articles, setArticles] = useState([]);
@@ -17,7 +18,7 @@ const Hero = () => {
       setLoading(true);
       try {
         const response = await apiClient.get("/articles/");
-        setArticles(response.data);
+        setArticles(response.data.results);
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {
@@ -28,7 +29,11 @@ const Hero = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <CircleLoader color="#ec4899" size={50} />
+      </div>
+    );
   }
 
   if (articles.length < 4) {
@@ -46,13 +51,15 @@ const Hero = () => {
   return (
     <div className="w-11/12 mt-5 mx-auto min-h-screen">
       {/* Header Section */}
-      <div className="mb-6">
-        <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-4 py-2 font-semibold shadow-md">
+      <div className="mb-6 flex items-center relative overflow-hidden">
+        <span className="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-2 font-semibold shadow-md relative whitespace-nowrap">
           Latest News
         </span>
-        <span className="ml-4 text-gray-700 font-medium">
-          Stay updated with the latest breaking news and stories
-        </span>
+        <div className="ml-4 overflow-hidden w-full">
+          <span className="text-gray-700 font-medium inline-block animate-marquee whitespace-nowrap">
+            Stay updated with the latest breaking news and stories
+          </span>
+        </div>
       </div>
 
       {/* Hero Layout */}

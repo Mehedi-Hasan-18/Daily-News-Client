@@ -19,7 +19,7 @@ const ArticleByCategory = () => {
           apiClient.get(`/articles/?category_id=${id}`),
           apiClient.get(`/categories/${id}`),
         ]);
-        setArticles(articlesRes.data);
+        setArticles(articlesRes.data.results);
         setCategory(categoryRes.data);
       } catch (error) {
         console.error("Error fetching category or products:", error);

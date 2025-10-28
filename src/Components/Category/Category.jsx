@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../../Services/apiClient";
 import CategoryDetails from "./CategoryDetails";
+import { CircleLoader, BeatLoader, RingLoader } from "react-spinners";
 
 const Category = () => {
-  const [categories, SetCategory] = useState([]);
+  const [categories, setCategory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategory = async () => {
-      const res = await apiClient.get("/categories/");
-      SetCategory(res.data);
+      try {
+        const res = await apiClient.get("/categories/");
+        setCategory(res.data.results);
+      } catch (error) {
+        console.error("Failed to load categories:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCategory();
   }, []);
-  if (!categories) return <div>Loading.......</div>;
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <CircleLoader color="#ec4899" size={50} />
+      </div>
+    );
+  }
+
   return (
     <section className="py-16 w-11/12 mx-auto">
       <div className="mb-8 text-center">
@@ -27,7 +43,7 @@ const Category = () => {
             key={category.id}
             index={category.id}
             category={category}
-          ></CategoryDetails>
+          />
         ))}
       </div>
     </section>
