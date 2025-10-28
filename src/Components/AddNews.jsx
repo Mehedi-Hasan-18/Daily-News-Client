@@ -64,6 +64,8 @@ const AddNews = () => {
           ? "/mustread-articles/"
           : data.articleType === "popular"
           ? "/popular-articles/"
+          :data.articleType === "dontmiss"
+          ? "/dontmiss-articles/"
           : "/articles/";
 
       const newsRes = await authApiClient.post(endpoint, formattedData);
@@ -83,6 +85,8 @@ const AddNews = () => {
         return "Must Read Article";
       case "popular":
         return "Popular Article";
+      case "Dont Miss":
+        return "Dont Miss Article";
       default:
         return "Article";
     }
@@ -109,6 +113,8 @@ const AddNews = () => {
           ? `/mustread-articles/${newsId}/images/`
           : articleType === "popular"
           ? `/popular-articles/${newsId}/images/`
+          : articleType === "dontmiss"
+          ? `/dontmiss-articles/${newsId}/images/`
           : `/articles/${newsId}/images/`;
 
       for (const image of images) {
@@ -170,6 +176,15 @@ const AddNews = () => {
                   className="radio radio-accent mr-2"
                 />
                 <span className="font-medium">Popular</span>
+              </label>
+              <label className="flex items-center p-3 bg-white rounded-lg border-2 cursor-pointer hover:border-purple-400 transition">
+                <input
+                  type="radio"
+                  {...register("articleType", { required: true })}
+                  value="dontmiss"
+                  className="radio radio-accent mr-2"
+                />
+                <span className="font-medium">Dont Miss</span>
               </label>
             </div>
             {errors.articleType && (

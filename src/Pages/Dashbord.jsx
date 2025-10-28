@@ -43,7 +43,7 @@ const Dashbord = () => {
         setNews(totalNews);
         setAllNews(allNewsArray);
         // setLatestnews(news1.data);
-        setAuthor(authors.data);
+        setAuthor(authors.data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -51,11 +51,11 @@ const Dashbord = () => {
     fetchData();
   }, []);
   useEffect(() => {
-    apiClient.get("/categories").then((res) => setCategory(res.data));
+    apiClient.get("/categories").then((res) => setCategory(res.data.results));
   }, []);
 
   useEffect(() => {
-    authApiClient.get("/auth/users").then((res) => setUser(res.data));
+    authApiClient.get("/auth/users").then((res) => setUser(res.data.results));
   }, []);
 
   const handleclick = (cardName) => {

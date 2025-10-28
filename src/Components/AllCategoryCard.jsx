@@ -1,10 +1,16 @@
 import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
 import authApiClient from "../Services/authApiClient";
 import { useNavigate } from "react-router-dom";
+import { CircleLoader } from "react-spinners";
 
 const AllCategoryCard = ({ allCategory, setCategory }) => {
   const navigate = useNavigate();
-  if (allCategory.length < 1) return <div>Loading......</div>;
+  if (allCategory.length < 1)
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <CircleLoader color="#ec4899" size={50} />
+      </div>
+    );
 
   const handleEdit = (category) => {
     navigate(`categories/edit/${category.id}/`);

@@ -1,8 +1,14 @@
 import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
 import authApiClient from "../Services/authApiClient";
+import { CircleLoader } from "react-spinners";
 
 const AllUserCard = ({ allUser, setUser }) => {
-  if (allUser.length < 1) return <div>Loading......</div>;
+  if (allUser.length < 1)
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <CircleLoader color="#ec4899" size={50} />
+      </div>
+    );
 
   const handleDelete = (user) => {
     if (window.confirm("Are you sure you want to delete this user item?")) {

@@ -25,7 +25,7 @@ const Sidebar = () => {
     { to: "/categories", icon: FiTag, label: "Categories" },
     { to: "/dashboard/category/add", icon: FiPlusCircle, label: "Add Category" },
     { to: "/dashboard/author/add", icon: FiPlusCircle, label: "Add Author" },
-    { to: "/users", icon: FiUsers, label: "Users" },
+    { to: "#", icon: FiUsers, label: "Users" },
   ];
 
   const menuItems = user.is_staff ? adminMenues : customerMenus;
