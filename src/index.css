@@ -9,3 +9,31 @@
   display: inline-block;
   animation: marquee 10s linear infinite;
 }
+
+:root {
+  --swiper-pagination-color: #ec4899;
+  --swiper-pagination-bottom: 0;
+  --swiper-pagination-bullet-size: 8px;
+  --swiper-pagination-bullet-inactive-color: #d1d5db;
+  --swiper-pagination-bullet-inactive-opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ec4899 !important;
+  width: 24px !important;
+  border-radius: 4px !important;
+}
+
+.swiper-pagination {
+  bottom: 0 !important;
+}
+
+.swiper-3d .swiper-slide-shadow-left,
+.swiper-3d .swiper-slide-shadow-right {
+  background-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0)
+  );
+}
+   
