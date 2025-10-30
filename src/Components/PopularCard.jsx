@@ -1,16 +1,24 @@
 import DefaultImage from "../assets/Default_Image.webp";
 import { format } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
+import { CircleLoader } from "react-spinners";
 
 const PopularCard = ({ article }) => {
   const navigate = useNavigate();
-  console.log(article);
 
   const handleArticleDetails = (id) => {
     navigate(`/popular-articles/${id}`);
   };
 
-  if (!article) return <div>Loading....</div>;
+  if (!article)
+    return (
+      <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-gray-50 via-pink-50 to-purple-50">
+        <CircleLoader color="#ec4899" size={60} />
+        <p className="mt-6 text-gray-600 font-medium animate-pulse">
+          Loading articles...
+        </p>
+      </div>
+    );
 
   const formattedDate = format(
     new Date(article.created_at),
@@ -20,7 +28,7 @@ const PopularCard = ({ article }) => {
   const firstImage = article.images?.[0]?.image || DefaultImage;
 
   return (
-    <div className="group cursor-pointer transition-all duration-300 hover:shadow-xl rounded-lg overflow-hidden bg-white">
+    <div className="group cursor-pointer transition-all duration-300 group-hover:shadow-xl rounded-lg overflow-hidden bg-white">
       {/* Image Container with Badge */}
       <div
         onClick={() => handleArticleDetails(article.id)}
