@@ -19,18 +19,26 @@ const Dashboard = () => {
   const [animateCards, setAnimateCards] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllArticles = async () => {
       try {
         setLoading(true);
-        const [news1, authors] = await Promise.all([
-          apiClient.get("/articles"),
-          apiClient.get("/authors"),
-        ]);
+        let allArticles = [];
+        let page = 1;
+        let hasMore = true;
 
-        const totalNews = news1.data.results.length;
+        while (hasMore) {
+          const response = await apiClient.get(`/articles/?page=${page}`);
+          allArticles = [...allArticles, ...response.data.results];
 
-        setNews(totalNews);
-        setAllNews(news1.data.results);
+          // Check if there are more pages
+          hasMore = response.data.next !== null;
+          page++;
+        }
+
+        const [authors] = await Promise.all([apiClient.get("/authors")]);
+
+        setNews(allArticles.length);
+        setAllNews(allArticles);
         setAuthor(authors.data.results);
 
         setTimeout(() => setAnimateCards(true), 100);
@@ -40,7 +48,7 @@ const Dashboard = () => {
         setLoading(false);
       }
     };
-    fetchData();
+    fetchAllArticles();
   }, []);
 
   useEffect(() => {
@@ -104,6 +112,8 @@ const Dashboard = () => {
       </div>
     );
   }
+
+  console.log(allNewss);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-purple-50 p-4 sm:p-6 lg:p-8">

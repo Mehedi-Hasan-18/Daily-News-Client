@@ -18,13 +18,31 @@ const PopularNews = () => {
     const fetchArticle = async () => {
       try {
         setLoading(true);
-        const response = await apiClient.get("/articles/");
-        if (response.data.results){
-          const filtered = response.data.results.filter(
-            (article) => article.types === "popular"
-          );
-          setArticle(filtered);
+
+        let allArticles = [];
+        let page = 1;
+        let hasMore = true;
+        // Fetch all pages
+        while (hasMore) {
+          const response = await apiClient.get(`/articles/?page=${page}`);
+          allArticles = [...allArticles, ...response.data.results];
+
+          // Check if there are more pages
+          hasMore = response.data.next !== null;
+          page++;
         }
+        // Filter articles by type
+        const filtered = allArticles.filter(
+          (article) => article.types === "popular"
+        );
+        setArticle(filtered);
+        // const response = await apiClient.get("/articles/");
+        // if (response.data.results){
+        //   const filtered = response.data.results.filter(
+        //     (article) => article.types === "popular"
+        //   );
+        //   setArticle(filtered);
+        // }
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {

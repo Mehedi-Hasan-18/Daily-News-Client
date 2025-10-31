@@ -11,45 +11,46 @@ const MustRead = () => {
   const [Loading, setLoading] = useState(false);
   const [Loading1, setLoading1] = useState(false);
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        setLoading(true);
-        const response = await apiClient.get("/articles/");
-        if (response.data.results) {
-          const filtered = response.data.results.filter(
-            (article) => article.types === "mustread"
-          );
-          setMustReadArticle(filtered);
-        }
-      } catch (error) {
-        console.error("Failed to fetch articles:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticle();
-  }, []);
+useEffect(() => {
+  const fetchAllArticles = async () => {
+    try {
+      setLoading(true);
+      setLoading1(true);
+      
+      let allArticles = [];
+      let page = 1;
+      let hasMore = true;
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        setLoading1(true);
-        const response = await apiClient.get("/articles/");
-        if (response.data.results){
-          const filtered = response.data.results.filter(
-            (article) => article.types === "dontmiss"
-          );
-          setDontMissArticle(filtered);
-        }
-      } catch (error) {
-        console.error("Failed to fetch articles:", error);
-      } finally {
-        setLoading1(false);
+      // Fetch all pages
+      while (hasMore) {
+        const response = await apiClient.get(`/articles/?page=${page}`);
+        allArticles = [...allArticles, ...response.data.results];
+        
+        // Check if there are more pages
+        hasMore = response.data.next !== null;
+        page++;
       }
-    };
-    fetchArticle();
-  }, []);
+
+      // Filter articles by type
+      const mustRead = allArticles.filter(
+        (article) => article.types === "mustread"
+      );
+      const dontMiss = allArticles.filter(
+        (article) => article.types === "dontmiss"
+      );
+
+      setMustReadArticle(mustRead);
+      setDontMissArticle(dontMiss);
+    } catch (error) {
+      console.error("Failed to fetch articles:", error);
+    } finally {
+      setLoading(false);
+      setLoading1(false);
+    }
+  };
+  
+  fetchAllArticles();
+}, []);
 
   return (
     <div className="w-full bg-gradient-to-l from-pink-50 to-blue-50 md:py-14 mt-0">
