@@ -14,7 +14,7 @@ const AddNews = () => {
   const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [newsId, setNewsId] = useState(null);
-  const [articleType, setArticleType] = useState("articles"); // Default type
+  const [articleType, setArticleType] = useState("normal"); // Default type
   const [previewImages, setPreviewImages] = useState([]);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,22 +55,14 @@ const AddNews = () => {
         biography: selectedAuthor.biography,
       },
       publishing_date: data.publishing_date,
+      types: data.articleType || "normal",
     };
 
     try {
-      // Post to selected endpoint based on article type
-      const endpoint =
-        data.articleType === "mustread"
-          ? "/mustread-articles/"
-          : data.articleType === "popular"
-          ? "/popular-articles/"
-          :data.articleType === "dontmiss"
-          ? "/dontmiss-articles/"
-          : "/articles/";
-
-      const newsRes = await authApiClient.post(endpoint, formattedData);
+      // Post to the /articles/ endpoint
+      const newsRes = await authApiClient.post("/articles/", formattedData);
       setNewsId(newsRes.data.id);
-      setArticleType(data.articleType || "articles");
+      setArticleType(data.articleType || "normal");
       alert(`${getArticleTypeName(data.articleType)} added successfully!`);
     } catch (error) {
       console.log("Error adding news", error);
@@ -85,10 +77,10 @@ const AddNews = () => {
         return "Must Read Article";
       case "popular":
         return "Popular Article";
-      case "Dont Miss":
-        return "Dont Miss Article";
+      case "dontmiss":
+        return "Don't Miss Article";
       default:
-        return "Article";
+        return "Normal Article";
     }
   };
 
@@ -107,15 +99,8 @@ const AddNews = () => {
     setLoading(true);
 
     try {
-      // Determine the correct endpoint based on article type
-      const imageEndpoint =
-        articleType === "mustread"
-          ? `/mustread-articles/${newsId}/images/`
-          : articleType === "popular"
-          ? `/popular-articles/${newsId}/images/`
-          : articleType === "dontmiss"
-          ? `/dontmiss-articles/${newsId}/images/`
-          : `/articles/${newsId}/images/`;
+      // Use the standard /articles/ endpoint for images
+      const imageEndpoint = `/articles/${newsId}/images/`;
 
       for (const image of images) {
         const formData = new FormData();
@@ -146,12 +131,12 @@ const AddNews = () => {
             <label className="block text-sm font-semibold mb-2 text-blue-700">
               Article Type *
             </label>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <label className="flex items-center p-3 bg-white rounded-lg border-2 cursor-pointer hover:border-blue-400 transition">
                 <input
                   type="radio"
                   {...register("articleType", { required: true })}
-                  value="articles"
+                  value="normal"
                   defaultChecked
                   className="radio radio-primary mr-2"
                 />
@@ -177,14 +162,15 @@ const AddNews = () => {
                 />
                 <span className="font-medium">Popular</span>
               </label>
-              <label className="flex items-center p-3 bg-white rounded-lg border-2 cursor-pointer hover:border-purple-400 transition">
+
+              <label className="flex items-center p-3 bg-white rounded-lg border-2 cursor-pointer hover:border-green-400 transition">
                 <input
                   type="radio"
                   {...register("articleType", { required: true })}
                   value="dontmiss"
                   className="radio radio-accent mr-2"
                 />
-                <span className="font-medium">Dont Miss</span>
+                <span className="font-medium">Don't Miss</span>
               </label>
             </div>
             {errors.articleType && (

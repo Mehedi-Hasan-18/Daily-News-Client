@@ -17,8 +17,13 @@ const PopularNews = () => {
     const fetchArticle = async () => {
       try {
         setLoading(true);
-        const response = await apiClient.get("/popular-articles/");
-        setArticle(response.data.results);
+        const response = await apiClient.get("/articles/");
+        if (response.data.results){
+          const filtered = response.data.results.filter(
+            (article) => article.types === "popular"
+          );
+          setArticle(filtered);
+        }
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {

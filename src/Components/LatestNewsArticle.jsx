@@ -9,18 +9,12 @@ import { CircleLoader } from "react-spinners";
 
 const LatestNewsArticle = () => {
   const [articles, setArticles] = useState([]);
-  const [mustreadarticles, setMustReadArticles] = useState([]);
-  const [populararticles, setPopularArticles] = useState([]);
-  const [dontmissarticles, setDontmissarticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [articleCount, setArticleCount] = useState(0);
-  const [mustReadCount, setMustReadCount] = useState(0);
-  const [popularCount, setPopularCount] = useState(0);
-  const [dontmissCount, setDontmissCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
 
@@ -30,50 +24,18 @@ const LatestNewsArticle = () => {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-        const [articlesRes, mustReadRes, popularRes, dontmissRes] =
-          await Promise.all([
-            apiClient.get(
-              `/articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
-            ),
-            apiClient.get(
-              `/mustread-articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
-            ),
-            apiClient.get(
-              `/popular-articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
-            ),
-            apiClient.get(
-              `/dontmiss-articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
-            ),
-          ]);
-
-        setArticles(articlesRes.data.results || []);
-        setMustReadArticles(mustReadRes.data.results || []);
-        setPopularArticles(popularRes.data.results || []);
-        setDontmissarticles(dontmissRes.data.results || []);
-
-        setArticleCount(articlesRes.data.count || 0);
-        setMustReadCount(mustReadRes.data.count || 0);
-        setPopularCount(popularRes.data.count || 0);
-        setDontmissCount(dontmissRes.data.count || 0);
-
-        setHasNext(
-          articlesRes.data.next ||
-            mustReadRes.data.next ||
-            popularRes.data.next ||
-            dontmissRes.data.next
+        const response = await apiClient.get(
+          `/articles/?category_id=${selectedCategory}&search=${searchQuery}&page=${currentPage}`
         );
-        setHasPrevious(
-          articlesRes.data.previous ||
-            mustReadRes.data.previous ||
-            popularRes.data.previous ||
-            dontmissRes.data.previous
-        );
+
+        setArticles(response.data.results || []);
+        setTotalCount(response.data.count || 0);
+        setHasNext(!!response.data.next);
+        setHasPrevious(!!response.data.previous);
       } catch (error) {
         console.error("Error fetching articles:", error);
         setArticles([]);
-        setMustReadArticles([]);
-        setPopularArticles([]);
-        setDontmissarticles([]);
+        setTotalCount(0);
       } finally {
         setLoading(false);
       }
@@ -105,15 +67,29 @@ const LatestNewsArticle = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const totalCount =
-    articleCount + mustReadCount + popularCount + dontmissCount;
+  // Separate articles by type
+  const normalArticles = articles.filter(
+    (article) => article.types === "normal"
+  );
+  const mustReadArticles = articles.filter(
+    (article) => article.types === "mustread"
+  );
+  const popularArticles = articles.filter(
+    (article) => article.types === "popular"
+  );
+  const dontMissArticles = articles.filter(
+    (article) => article.types === "dontmiss"
+  );
+
+  // Count by type
+  const normalCount = normalArticles.length;
+  const mustReadCount = mustReadArticles.length;
+  const popularCount = popularArticles.length;
+  const dontMissCount = dontMissArticles.length;
+
   const pageSize = 10;
   const totalPages = Math.ceil(totalCount / pageSize);
-  const currentItemsCount =
-    articles.length +
-    mustreadarticles.length +
-    populararticles.length +
-    dontmissarticles.length;
+  const currentItemsCount = articles.length;
 
   const getPageNumbers = () => {
     const pages = [];
@@ -215,9 +191,9 @@ const LatestNewsArticle = () => {
                     {totalCount} Articles Available
                   </h2>
                   <div className="flex flex-wrap gap-3 text-sm">
-                    {articleCount > 0 && (
+                    {normalCount > 0 && (
                       <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
-                        Latest: {articleCount}
+                        Normal: {normalCount}
                       </span>
                     )}
                     {mustReadCount > 0 && (
@@ -230,9 +206,9 @@ const LatestNewsArticle = () => {
                         Popular: {popularCount}
                       </span>
                     )}
-                    {dontmissCount > 0 && (
+                    {dontMissCount > 0 && (
                       <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full font-medium">
-                        Don't Miss: {dontmissCount}
+                        Don't Miss: {dontMissCount}
                       </span>
                     )}
                   </div>
@@ -250,27 +226,18 @@ const LatestNewsArticle = () => {
             {/* Articles Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
               {articles.map((article) => (
-                <LatestNews key={`article-${article.id}`} article={article} />
-              ))}
-              {mustreadarticles.map((article) => (
-                <NewsCard key={`mustread-${article.id}`} article={article} />
-              ))}
-              {populararticles.map((article) => (
-                <PopularCard key={`popular-${article.id}`} article={article} />
-              ))}
-              {dontmissarticles.map((article) => (
-                <PopularCard key={`dontmiss-${article.id}`} article={article} />
+                <LatestNews key={`normal-${article.id}`} article={article} />
               ))}
             </div>
 
             {/* Modern Pagination */}
-            {totalPages > 1 && (
+            {totalPages >= 1 && (
               <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
                   {/* Previous Button */}
                   <button
                     onClick={handlePreviousPage}
-                    disabled={!hasPrevious}
+                    disabled={!hasPrevious || totalPages <= 1}
                     className="group flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 shadow-lg hover:shadow-xl disabled:hover:from-pink-500 disabled:hover:to-purple-500 transform hover:scale-105 disabled:hover:scale-100"
                   >
                     <svg
@@ -300,6 +267,7 @@ const LatestNewsArticle = () => {
                         ) : (
                           <button
                             onClick={() => handlePageClick(page)}
+                            disabled={totalPages < 1}
                             className={`min-w-[44px] px-4 py-2 rounded-xl font-semibold transition-all duration-300 ${
                               currentPage === page
                                 ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-110"

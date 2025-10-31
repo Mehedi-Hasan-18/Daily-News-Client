@@ -22,30 +22,17 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [news1, news2, news3, news4, authors] = await Promise.all([
+        const [news1, authors] = await Promise.all([
           apiClient.get("/articles"),
-          apiClient.get("/dontmiss-articles"),
-          apiClient.get("/mustread-articles"),
-          apiClient.get("/popular-articles"),
           apiClient.get("/authors"),
         ]);
 
-        const totalNews =
-          news1.data.results.length +
-          news2.data.results.length +
-          news3.data.results.length +
-          news4.data.results.length;
-        const allNewsArray = [
-          ...news1.data.results.map((item) => ({ ...item })),
-          ...news2.data.results.map((item) => ({ ...item })),
-          ...news3.data.results.map((item) => ({ ...item })),
-          ...news4.data.results.map((item) => ({ ...item })),
-        ];
+        const totalNews = news1.data.results.length;
 
         setNews(totalNews);
-        setAllNews(allNewsArray);
+        setAllNews(news1.data.results);
         setAuthor(authors.data.results);
-        
+
         setTimeout(() => setAnimateCards(true), 100);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -142,7 +129,9 @@ const Dashboard = () => {
                 key={stat.name}
                 onClick={() => handleclick(stat.name)}
                 className={`group relative cursor-pointer transition-all duration-500 ${
-                  animateCards ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  animateCards
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -193,8 +182,12 @@ const Dashboard = () => {
 
                   {/* Bottom Accent Line */}
                   <div
-                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.color} transform origin-left transition-transform duration-300 ${
-                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${
+                      stat.color
+                    } transform origin-left transition-transform duration-300 ${
+                      isActive
+                        ? "scale-x-100"
+                        : "scale-x-0 group-hover:scale-x-100"
                     }`}
                   ></div>
                 </div>
@@ -209,9 +202,14 @@ const Dashboard = () => {
           <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 px-6 py-4">
             <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
               <span className="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
-                {activeCard === "Total News" && <FaNewspaper className="w-5 h-5" />}
-                {activeCard === "Total Category" && <FiTag className="w-5 h-5" />}
-                {(activeCard === "Total User" || activeCard === "Total Author") && (
+                {activeCard === "Total News" && (
+                  <FaNewspaper className="w-5 h-5" />
+                )}
+                {activeCard === "Total Category" && (
+                  <FiTag className="w-5 h-5" />
+                )}
+                {(activeCard === "Total User" ||
+                  activeCard === "Total Author") && (
                   <FiUser className="w-5 h-5" />
                 )}
               </span>
@@ -225,7 +223,10 @@ const Dashboard = () => {
               <AllNewsCard allnews={allNewss} setAllNews={setAllNews} />
             )}
             {activeCard === "Total Category" && (
-              <AllCategoryCard allCategory={category} setCategory={setCategory} />
+              <AllCategoryCard
+                allCategory={category}
+                setCategory={setCategory}
+              />
             )}
             {activeCard === "Total User" && (
               <AllUserCard allUser={users} setUser={setUser} />

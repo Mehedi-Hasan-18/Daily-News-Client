@@ -15,7 +15,7 @@ const AllNewsCard = ({ allnews, setAllNews }) => {
 
   const handleEdit = (news) => {
     console.log("Edit news:", news);
-    navigate(`article/edit/${news.id}`);
+    navigate(`articles/edit/${news.id}`);
   };
 
   const handleDelete = (news) => {

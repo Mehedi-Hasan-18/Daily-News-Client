@@ -15,8 +15,13 @@ const MustRead = () => {
     const fetchArticle = async () => {
       try {
         setLoading(true);
-        const response = await apiClient.get("/mustread-articles/");
-        setMustReadArticle(response.data.results);
+        const response = await apiClient.get("/articles/");
+        if (response.data.results) {
+          const filtered = response.data.results.filter(
+            (article) => article.types === "mustread"
+          );
+          setMustReadArticle(filtered);
+        }
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {
@@ -30,8 +35,13 @@ const MustRead = () => {
     const fetchArticle = async () => {
       try {
         setLoading1(true);
-        const response = await apiClient.get("/dontmiss-articles/");
-        setDontMissArticle(response.data.results);
+        const response = await apiClient.get("/articles/");
+        if (response.data.results){
+          const filtered = response.data.results.filter(
+            (article) => article.types === "dontmiss"
+          );
+          setDontMissArticle(filtered);
+        }
       } catch (error) {
         console.error("Failed to fetch articles:", error);
       } finally {
