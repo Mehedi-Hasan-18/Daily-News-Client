@@ -2,20 +2,26 @@ import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
 import ArticleEditForm from "./ArticleEditForm";
 import { useNavigate } from "react-router-dom";
 import authApiClient from "../Services/authApiClient";
+import { CircleLoader } from "react-spinners";
 
-const AllNewsCard = ({ allnews,setAllNews }) => {
-    const navigate = useNavigate();
-  if (allnews.length < 1) return <div>Loading......</div>;
-  
+const AllNewsCard = ({ allnews, setAllNews }) => {
+  const navigate = useNavigate();
+  if (allnews.length < 1)
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <CircleLoader color="#ec4899" size={50} />
+      </div>
+    );
+
   const handleEdit = (news) => {
     console.log("Edit news:", news);
-    navigate(`article/edit/${news.id}`)
+    navigate(`articles/edit/${news.id}`);
   };
 
   const handleDelete = (news) => {
     if (window.confirm("Are you sure you want to delete this news item?")) {
-      authApiClient.delete(`articles/${news.id}/`)
-      setAllNews(prev => prev.filter(item => item.id !== news.id));
+      authApiClient.delete(`articles/${news.id}/`);
+      setAllNews((prev) => prev.filter((item) => item.id !== news.id));
     }
   };
 

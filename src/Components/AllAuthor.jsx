@@ -1,10 +1,16 @@
 import { FiEdit, FiTag, FiTrash2, FiUser } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import authApiClient from "../Services/authApiClient";
+import { CircleLoader } from "react-spinners";
 
 const AllAuthor = ({ allAuthor, setAuthor }) => {
   const navigate = useNavigate();
-  if (allAuthor.length < 1) return <div>Loading......</div>;
+  if (allAuthor.length < 1)
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <CircleLoader color="#ec4899" size={50} />
+      </div>
+    );
 
   const handleEdit = (author) => {
     navigate(`authors/edit/${author.id}/`);
