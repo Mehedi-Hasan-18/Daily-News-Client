@@ -7,7 +7,7 @@ const PopularCard = ({ article }) => {
   const navigate = useNavigate();
 
   const handleArticleDetails = (id) => {
-    navigate(`/popular-articles/${id}`);
+    navigate(`/articles/${id}`);
   };
 
   if (!article)
@@ -93,7 +93,7 @@ const PopularCard = ({ article }) => {
 
         {/* Read More Link */}
         <Link
-          to={`/popular-articles/${article.id}`}
+          to={`/articles/${article.id}`}
           className="inline-flex items-center text-red-500 font-semibold hover:text-red-600 transition-colors duration-300"
         >
           Read More

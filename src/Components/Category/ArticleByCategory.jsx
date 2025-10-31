@@ -19,18 +19,12 @@ const ArticleByCategory = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [articlesRes, mustReadRes, popularRes, dontmissRes, categoryRes] =
+        const [articlesRes, categoryRes] =
           await Promise.all([
             apiClient.get(`/articles/?category_id=${id}`),
-            apiClient.get(`/mustread-articles/?category_id=${id}`),
-            apiClient.get(`/popular-articles/?category_id=${id}`),
-            apiClient.get(`/dontmiss-articles/?category_id=${id}`),
             apiClient.get(`/categories/${id}`),
           ]);
         setArticles(articlesRes.data.results);
-        setMustReadArticles(mustReadRes.data.results || []);
-        setPopularArticles(popularRes.data.results || []);
-        setDontmissarticles(dontmissRes.data.results || []);
         setCategory(categoryRes.data);
       } catch (error) {
         console.error("Error fetching category or products:", error);
@@ -52,15 +46,6 @@ const ArticleByCategory = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {articles.map((article) => (
             <LatestNews key={article.id} article={article} />
-          ))}
-          {mustreadarticles.map((article) => (
-            <NewsCard key={`mustread-${article.id}`} article={article} />
-          ))}
-          {populararticles.map((article) => (
-            <PopularCard key={`popular-${article.id}`} article={article} />
-          ))}
-          {dontmissarticles.map((article) => (
-            <PopularCard key={`dontmiss-${article.id}`} article={article} />
           ))}
         </div>
       ) : (

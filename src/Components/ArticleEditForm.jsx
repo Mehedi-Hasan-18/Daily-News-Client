@@ -16,7 +16,24 @@ const ArticleEditForm = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [authors, setAuthors] = useState([]);
 
+  // Fetch Categories
+  useEffect(() => {
+    apiClient.get("/categories/").then((res) => {
+      setCategories(res.data.results || res.data);
+    });
+  }, []);
+
+  // Fetch Authors
+  useEffect(() => {
+    apiClient.get("/authors/").then((res) => {
+      setAuthors(res.data.results || res.data);
+    });
+  }, []);
+
+  // Fetch Article Data
   useEffect(() => {
     apiClient.get(`/articles/${id}`).then((res) => {
       const data = res.data;
@@ -187,64 +204,45 @@ const ArticleEditForm = () => {
           )}
         </div>
 
-        {/* Category */}
+        {/* Category Dropdown */}
         <div>
-          <label className="block text-sm font-medium">Category Name *</label>
-          <input
-            {...register("category.name", {
-              required: true,
-              minLength: 1,
-              maxLength: 200,
+          <label className="block text-sm font-medium">Category *</label>
+          <select
+            {...register("category.id", {
+              required: "Category is required",
             })}
-            className="input input-bordered w-full"
-          />
-          {errors.category?.name && (
-            <p className="text-red-500 text-xs">Category name is required</p>
+            className="select select-bordered w-full"
+          >
+            <option value="">Select a category</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          {errors.category?.id && (
+            <p className="text-red-500 text-xs">{errors.category.id.message}</p>
           )}
         </div>
 
+        {/* Author Dropdown */}
         <div>
-          <label className="block text-sm font-medium">
-            Category Description *
-          </label>
-          <input
-            {...register("category.descriptions", {
-              required: true,
-              minLength: 1,
+          <label className="block text-sm font-medium">Author *</label>
+          <select
+            {...register("author.id", {
+              required: "Author is required",
             })}
-            className="input input-bordered w-full"
-          />
-          {errors.category?.descriptions && (
-            <p className="text-red-500 text-xs">Description is required</p>
-          )}
-        </div>
-
-        {/* Author */}
-        <div>
-          <label className="block text-sm font-medium">Author Name *</label>
-          <input
-            {...register("author.name", {
-              required: true,
-              minLength: 1,
-              maxLength: 150,
-            })}
-            className="input input-bordered w-full"
-          />
-          {errors.author?.name && (
-            <p className="text-red-500 text-xs">Author name is required</p>
-          )}
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium">
-            Author Biography *
-          </label>
-          <textarea
-            {...register("author.biography", { required: true, minLength: 1 })}
-            className="textarea textarea-bordered w-full h-24"
-          />
-          {errors.author?.biography && (
-            <p className="text-red-500 text-xs">Biography is required</p>
+            className="select select-bordered w-full"
+          >
+            <option value="">Select an author</option>
+            {authors.map((auth) => (
+              <option key={auth.id} value={auth.id}>
+                {auth.name}
+              </option>
+            ))}
+          </select>
+          {errors.author?.id && (
+            <p className="text-red-500 text-xs">{errors.author.id.message}</p>
           )}
         </div>
 

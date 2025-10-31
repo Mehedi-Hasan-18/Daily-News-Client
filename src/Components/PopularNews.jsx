@@ -8,6 +8,7 @@ import "swiper/css/effect-coverflow";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import apiClient from "../Services/apiClient";
 import PopularCard from "./PopularCard";
+import NewsCard from "./NewsCard";
 
 const PopularNews = () => {
   const [articles, setArticle] = useState([]);
@@ -103,7 +104,7 @@ const PopularNews = () => {
               {articles.map((article) => (
                 <SwiperSlide key={article.id}>
                   <div className="h-full">
-                    <PopularCard article={article} />
+                    <NewsCard article={article} />
                   </div>
                 </SwiperSlide>
               ))}

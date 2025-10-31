@@ -7,7 +7,7 @@ import { Calendar, ChevronRight } from "lucide-react";
 const SideNewsCard = ({ article }) => {
   const navigate = useNavigate();
   const handleClick = (id) => {
-    navigate(`/dontmiss-articles/${id}`);
+    navigate(`/articles/${id}`);
   };
 
   if (!article) return <div>Loading...........</div>;

@@ -5,7 +5,8 @@ import useAuthContext from "../hooks/useAuthContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user,logoutUser } = useAuthContext();
+  const { user, logoutUser } = useAuthContext();
+  console.log("Navbar User:", user);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -34,10 +35,20 @@ const Navbar = () => {
           <a href="/contactus" className="hover:text-red-600">
             Contact
           </a>
-          {user ? (
+          {user && user.is_staff ? (
             <div className="flex gap-3">
-              <Link className="hover:text-red-600" to={"/dashboard"}>Dashboard</Link>
-              <Link className="hover:text-red-600" onClick={logoutUser}>LogOut</Link>
+              <Link className="hover:text-red-600" to={"/dashboard"}>
+                Dashboard
+              </Link>
+              <Link className="hover:text-red-600" onClick={logoutUser}>
+                LogOut
+              </Link>
+            </div>
+          ) : user ? (
+            <div className="flex gap-3">
+              <Link className="hover:text-red-600" onClick={logoutUser}>
+                LogOut
+              </Link>
             </div>
           ) : (
             <div className="flex gap-3">

@@ -38,7 +38,7 @@ const useAuth = () => {
   //   FetchUser
   const fetchUserProfile = async () => {
     try {
-      const response = await apiClient.get("/auth/users/me", {
+      const response = await apiClient.get("/auth/users/me/", {
         headers: { Authorization: `JWT ${authToken?.access}` },
       });
       setUser(response.data);

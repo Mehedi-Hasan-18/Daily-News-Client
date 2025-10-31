@@ -14,7 +14,7 @@ const AddNews = () => {
   const [categories, setCategories] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [newsId, setNewsId] = useState(null);
-  const [articleType, setArticleType] = useState("normal"); // Default type
+  const [articleType, setArticleType] = useState("normal");
   const [previewImages, setPreviewImages] = useState([]);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);

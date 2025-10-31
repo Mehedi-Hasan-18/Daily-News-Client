@@ -6,7 +6,7 @@ const NewsCard = ({ article }) => {
   const navigate = useNavigate();
 
   const handleArticleDetails = (id) => {
-    navigate(`/mustread-articles/${id}`);
+    navigate(`/articles/${id}`);
   };
 
   if (!article) return <div>Loading....</div>;
@@ -84,7 +84,7 @@ const NewsCard = ({ article }) => {
 
         {/* Read More Link */}
         <Link
-          to={`/mustread-articles/${article.id}`}
+          to={`/articles/${article.id}`}
           className="inline-flex items-center text-red-500 font-semibold hover:text-red-600 transition-colors duration-300"
         >
           Read More
