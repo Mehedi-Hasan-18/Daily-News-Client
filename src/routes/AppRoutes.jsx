@@ -58,7 +58,10 @@ const AppRoutes = () => {
         }
       >
         <Route path="/dashboard" element={<Dashbord></Dashbord>} />
-        <Route path="article/edit/:id/" element={<ArticleEditForm />} />
+        <Route path="articles/edit/:id/" element={<ArticleEditForm />} />
+        <Route path="mustread-articles/edit/:id/" element={<ArticleEditForm />} />
+        <Route path="popular-articles/edit/:id/" element={<ArticleEditForm />} />
+        <Route path="dontmiss-articles/edit/:id/" element={<ArticleEditForm />} />
         <Route path="authors/edit/:id/" element={<AuthorEditForm />} />
         <Route path="categories/edit/:id/" element={<CategoryEditForm />} />
         <Route path="news/add" element={<AddNews />} />
